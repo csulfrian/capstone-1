@@ -1,4 +1,19 @@
 import pandas as pd
+import numpy as np
+
+# TODO: add functionality to take parameters from external text files
+# The country codes that we want to run the process on
+country_codes = ['USA', 'SWE', 'AUS', 'DEU', 'CHE', 'GBR']
+
+# The codes of the indicators that we want to explore
+# See the README.md file for explanations of the codes
+codes = ['SE.XPD.TOTL.GD.ZS',
+            'SE.XPD.PRIM.ZS',
+            'SE.PRM.ENRL.TC.ZS',
+            'SE.PRM.TCHR',
+            'SL.TLF.ADVN.ZS',
+            'NY.GDP.PCAP.CD']
+
 
 def drop_empty(df):
     '''
@@ -6,6 +21,9 @@ def drop_empty(df):
     Next - auto generates a list of column names to remove
         1970 - 1977 - very little data
         2020 - 2100 - all empty
+
+    Input:
+        df - the DataFrame that needs to be cleaned
 
     Output:
         cols_to_drop - list of column names
@@ -26,12 +44,14 @@ def drop_empty(df):
     df_cleaned = df_cleaned.drop(columns='sum')
 
     df_cleaned.to_csv('data/processed/EdStatsClean.csv')
-    
+
     return df_cleaned
+
 
 def country_df(df, country_code, indicators):
     '''
-    calculates the individual dataframes for each country we're interested in, as well as the indicators we want to examine
+    Calculates the individual dataframes for each country we're interested in,
+    as well as the indicators we want to examine
 
     input:
         df - the original dataframe
@@ -49,26 +69,46 @@ def country_df(df, country_code, indicators):
 
     return country_w_codes
 
-if __name__ == '__main__':
-    
-    df_to_clean = pd.read_csv('data/raw/EdStatsData.csv')
-    clean_df = drop_empty(df_to_clean)
 
-    # The country codes that we want to run the process on
-    country_codes = ['USA', 'SWE', 'AUS', 'DEU', 'CHE', 'GBR']
-
-    '''
-    The codes of the indicators that we want to explore
-    See the README.md file for explanations of the codes
-    '''
-    codes = ['SE.XPD.TOTL.GD.ZS', 'SE.XPD.PRIM.ZS', 'SE.PRM.ENRL.TC.ZS', 'SE.PRM.TCHR', 'SL.TLF.ADVN.ZS', 'NY.GDP.PCAP.CD']
-    
-    joined = pd.DataFrame(clean_df.iloc[0]).T
+def join_df(df, country_codes, indicators):
+    joined = pd.DataFrame(df.iloc[0]).T
 
     for country in country_codes:
-        country_dfs = country_df(clean_df, country, codes)
+        country_dfs = country_df(df, country, indicators)
         joined = pd.concat([joined, country_dfs], axis=0)
+
+    joined = joined.drop(index=4)\
+                   .reset_index(drop=True)
+                   
+    joined.to_csv('data/processed/EdStatsAggregated.csv')
+
+    return joined
+
+
+def one_indicator_df(df, indicators):
+    '''
+    Saves a copy of each indicator code we're interested in with all the countries
+    we want. Also strips out NaNs
+
+    Input:
+        df - the DataFrame
+        indicators - the indicator codes
     
-    joined.drop(index=4)\
-          .reset_index(drop=True)\
-          .to_csv('data/processed/EdStatsAggregated.csv')
+    Output:
+        No return. Just saving the .csv
+    '''
+    for code in indicators:
+        one_code_df = df.copy()
+        one_code_df = one_code_df[one_code_df['Indicator Code'] == code]
+        one_code_df = one_code_df.reset_index(drop=True)
+        one_code_df.to_csv(f'data/processed/{code}.csv')
+
+
+if __name__ == '__main__':
+    df_to_clean = pd.read_csv('data/raw/EdStatsData.csv')
+
+    clean_df = drop_empty(df_to_clean)
+
+    joined = join_df(clean_df, country_codes, codes)
+
+    one_indicator_df(joined, codes)

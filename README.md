@@ -7,3 +7,13 @@ Note: data in Europe will change due to many countries switching to the Euro in 
 
 ## Methodology
 Data cleaning was performed using Pandas to remove the many NaN values in the dataset, reducing the dataset down from >326MB to 95MB. There were numerous indicator codes that had no records, and there were many years that had no data at all (including years for projections from 2020 - 2100).
+
+## Parameters
+The following Indicator Codes were interesting to me:
+
+   Government expenditure as % of GDP - SE.XPD.TOTL.GD.ZS  
+   Expenditure on Primary as % of gov't expenditure on education - SE.XPD.PRIM.ZS  
+
+## Visualization
+Below is a chart showing the selected countries and their respective spending on education as a % of GDP.
+![alt text](./images/GDPs.png "Countries' spending on education")
