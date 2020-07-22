@@ -12,7 +12,7 @@ Data cleaning was performed using Pandas to remove the many NaN values in the da
 The following Indicator Codes were interesting to me:
 
    Government expenditure as % of GDP - SE.XPD.TOTL.GD.ZS  
-   Expenditure on Primary as % of gov't expenditure on education - SE.XPD.PRIM.ZS  
+   Expenditure on primary education as % of total on education - SE.XPD.PRIM.ZS  
 
 ## Visualization
 Below is a chart showing the selected countries and their respective spending on education as a % of GDP.
