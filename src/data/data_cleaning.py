@@ -1,18 +1,16 @@
+import csv
 import pandas as pd
 import numpy as np
 
-# TODO: add functionality to take parameters from external text files
-# The country codes that we want to run the process on
-country_codes = ['USA', 'SWE', 'AUS', 'DEU', 'CHE', 'GBR']
+with open('data/countries.csv') as f:
+    reader = csv.reader(f)
+    data = list(reader)
+country_codes = data[0]
 
-# The codes of the indicators that we want to explore
-# See the README.md file for explanations of the codes
-codes = ['SE.XPD.TOTL.GD.ZS',
-            'SE.XPD.PRIM.ZS',
-            'SE.PRM.ENRL.TC.ZS',
-            'SE.PRM.TCHR',
-            'SL.TLF.ADVN.ZS',
-            'NY.GDP.PCAP.CD']
+with open('data/indicators.csv') as g:
+    reader = csv.reader(g)
+    data_ = list(reader)
+indicators = data_[0]
 
 
 def drop_empty(df):
@@ -64,7 +62,6 @@ def country_df(df, country_code, indicators):
     country = df[df['Country Code'] == country_code]
     country_w_codes = country[country['Indicator Code'].isin(indicators)]
 
-    # Save a copy of each countries' featurized data
     country_w_codes.to_csv(f'data/processed/{country_code}_individual.csv')
 
     return country_w_codes
@@ -109,6 +106,6 @@ if __name__ == '__main__':
 
     clean_df = drop_empty(df_to_clean)
 
-    joined = join_df(clean_df, country_codes, codes)
+    joined_df= join_df(clean_df, country_codes, indicators)
 
-    one_indicator_df(joined, codes)
+    one_indicator_df(joined_df, indicators)

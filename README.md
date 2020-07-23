@@ -11,7 +11,6 @@ Every nation has their own theory of how to educate its children and in turn, di
 
 **How does the relationship between education spending correlate to different outcomes?**\
 I used government expenditure on education as a percentage of GDP as the main feature of this study. 
-I chose an **_α = 0.05_**, as there are likely many factors independent of education funding that could have an effect on the outcomes. 
 
 ![alt text](./images/us-spend-gdp.png "Countries' spending on education")
 
@@ -26,7 +25,7 @@ From The World Bank:
 
 I downloaded the data from The World Bank Open Data website, and it was well-organized and relatively junk-free.
 
-There are many codes (~3600 per country) listed within the data, and many seem to overlap in spirit. Each of the descriptions is fairly clear, and after much digging, the following Indicator Codes were interesting to me:
+There are a lot of codes (>3600 per country) listed within the data, and many seem to overlap in spirit. Each of the descriptions is fairly clear, and after much digging, the following Indicator Codes were interesting to me:
 
 * Government expenditure as % of GDP - SE.XPD.TOTL.GD.ZS  
 * Expenditure on primary education as % of total on education - SE.XPD.PRIM.ZS 
@@ -35,10 +34,21 @@ There are many codes (~3600 per country) listed within the data, and many seem t
 * Percentage of the labor force with advanced education - SL.TLF.ADVN.ZS
 * GRP per capita, current dollars - NY.GDP.PCAP.CD  
 
+## Countries
+I chose 6 different countries for this study. There are some diverse ideas within this set about how education is run and how it relates to the workforce. 
+
+The countries are:
+* United States
+* Sweden
+* Brazil
+* Germany
+* Switzerland
+* Costa Rica
+
 ## Visualization
 Below is a chart showing the selected countries and their respective spending on education as a % of GDP.
 
-![alt text](./images/gdp-expenditure.png "Chart of countries' expenditure on education")
+![alt text](./images/plot-gdp-expenditure.png "Chart of countries' expenditure on education")
 
 Distributions of the percentage of the labor force with advanced educations.
 ![alt text](./images/pdf-percent-advanced.png "Distributions of the percentage of those with advanced educations")
