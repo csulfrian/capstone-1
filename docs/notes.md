@@ -1,4 +1,5 @@
 ## Notes for the capstone
+Include raw data, give familiarity with data, here's how i answered the question, conclusion, next steps
 
 ### Data cleaning pipeline outline
 /raw/input file \

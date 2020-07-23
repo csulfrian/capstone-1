@@ -31,14 +31,16 @@ def create_plot(df, labels, countries, filename):
 
     years = list(df[::-1])
 
-    fig, ax = plt.subplots(figsize=(12, 8), dpi=72)
+    fig, ax = plt.subplots(figsize=(12, 8), dpi=300)
 
     for i, _ in enumerate(countries):
         ax.plot(df.iloc[i], alpha=0.8, label=countries[i])
     ax.set_title(labels[2])
     ax.set_xlabel(labels[0])
     ax.set_ylabel(labels[1])
-    ax.set_xticklabels(years, rotation=20)
+    Xaxis.limit_range_for_scale()
+    ax.set_xticklabels(years, rotation=60)
+    ax.set_xlimit()
     plt.legend()
     plt.tight_layout()
     plt.savefig(f'images/{filename}')
@@ -47,39 +49,35 @@ def create_plot(df, labels, countries, filename):
     return fig
 
 
-def create_corr_heatmap(df):
-    return df.corr(method='pearson')
-
-
-def gdp_by_country(df):
-    return df[df['Indicator Code'] == 'SE.XPD.TOTL.GD.ZS']
-
-
-def advanced_ed_by_country(df):
-    return df[df['Indicator Code'] == 'SL.TLF.ADVN.ZS']
-
-
-def num_teachers_by_country(df):
-    return df[df['Indicator Code'] == 'SE.PRM.TCHR']
-
-
 if __name__ == '__main__':
+    '''
     # Spending on education by GDP plot
-    gdps = gdp_by_country(df)
+    gdps = df[df['Indicator Code'] == 'SE.XPD.TOTL.GD.ZS']
     labels = ('Year', '% GDP', 'Government expenditure on education as % of GDP')
-    create_plot(gdps, labels, country_codes, filename='GDPs')
+    create_plot(gdps, labels, country_codes, filename='gdp-expenditure')
 
     # Percentage of labor force with advanced educations
-    advanced_ed = advanced_ed_by_country(df)
+    advanced_ed = df[df['Indicator Code'] == 'SL.TLF.ADVN.ZS']
     labels = ('Year', '%', 'Percent of labor force with advanced educations')
     create_plot(advanced_ed, labels, country_codes, filename='advanced-ed')
 
     # Number of teachers in primary ed
-    num_teachers = num_teachers_by_country(df)
+    num_teachers = df[df['Indicator Code'] == 'SE.PRM.TCHR']
     labels = ('Year', 'Number', 'Number of teachers in primary education')
     create_plot(num_teachers, labels, country_codes, filename='num-teachers')
-
+    '''
     # GDP per capita
     gdp_per_capita = df[df['Indicator Code'] == 'NY.GDP.PCAP.CD']
     labels = ('Year', 'Dollars', 'GDP per capita (current USD)')
     create_plot(gdp_per_capita, labels, country_codes, filename='gdp-per-capita')
+    '''
+    # Percentage of ed dollars spent on primary ed
+    num_teachers = df[df['Indicator Code'] == 'SE.XPD.PRIM.ZS']
+    labels = ('Year', '%', 'Percentage of education dollars spend on primary ed')
+    create_plot(num_teachers, labels, country_codes, filename='percent-on-primary')
+
+    # Student teacher ratio in primary ed
+    gdp_per_capita = df[df['Indicator Code'] == 'SE.PRM.ENRL.TC.ZS']
+    labels = ('Year', 'Students per Teacher', 'Student / Teacher Ratio in Primary Ed')
+    create_plot(gdp_per_capita, labels, country_codes, filename='student-teacher-ratio')
+    '''
