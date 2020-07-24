@@ -82,15 +82,43 @@ Also to note: the downward trend in many of the countries (albeit over a short p
 
 ## Basic Analysis
 
+I chose to use visual analysis techniques initially to see how the numbers for each metric were distributed relative to one another. The PDFs show another interesting 
+
 Right away, this plot of the PDFs of the amount of students per teacher jumps out as something that could likely be highly correlated to the total investment in education a country makes. Let's remember this metric.
 ![alt text](./images/pdf-student-teacher-ratio.png "Student to teacher ratio")
+
+![alt text](./images/pdf-percent-advanced.png "Percent of workforce with advanced education")
+
+![alt text](./images/pdf-gdp-per-capita.png "GDP per capita PDF")
 
 
 ## Indicator Code Correlation
 
-The correlation heatmaps generated for each country tell an interesting story, but one that's expected. 
+The correlation heatmaps generated for each country tell an interesting story. In these heatmaps, darker colors represent higher correlation values. One of the common elements across the board is how highly the students per teacher number is correlated to education funding, which seems to be an easy.
 
-![alt text](./images/spearman-heatmap-animated.gif "Animated heatmaps of 6 countries")
+![alt text](./images/pearson-heatmap-animated.gif "Animated heatmaps of 6 countries")
 
+Switzerland shows some pretty deep colors, which seem to follow its pattern of highly funding its education system.
+
+![alt text](./images/pearson-heatmap-CHE.png "Switzerland correlation heatmap")
+
+Compared to its neighbor Switzerland, Germany has much lower correlation values for most every indicator. 
+
+![alt text](./images/pearson-heatmap-DEU.png "Germany correlation heatmap")
+
+![alt text](./images/pearson-heatmap-CRI.png "Costa Rica correlation heatmap")
 
 ## Conclusion
+
+
+
+## Points to Expand Project Further
+
+* Add function to pick highest correlation values from each set of indicators to run further studies on
+* Add bootstrapping to the correlation results to get more confident results
+* Add R<sup>2</sup> element to bootstrap, and create PDF of its distribution
+* Get more up-to-date data
+* Nearly everything is parametric now, and can produce different results. Just need to implement parametric chart labels and filenames.
+* Expand Indicator Codes list
+* Run tests on collected regions that are present in the data
+* Integrate other data, such as length of school year, median incomes, etc
