@@ -2,16 +2,6 @@ import csv
 import pandas as pd
 import numpy as np
 
-with open('data/countries.csv') as f:
-    reader = csv.reader(f)
-    data = list(reader)
-country_codes = data[0]
-
-with open('data/indicators.csv') as g:
-    reader = csv.reader(g)
-    data_ = list(reader)
-indicators = data_[0]
-
 
 def drop_empty(df):
     '''
@@ -112,6 +102,16 @@ def one_indicator_df(df, indicators):
 
 
 if __name__ == '__main__':
+    with open('data/countries.csv') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+    country_codes = data[0]
+
+    with open('data/indicators.csv') as g:
+        reader = csv.reader(g)
+        data_ = list(reader)
+    indicators = data_[0]
+    
     df_to_clean = pd.read_csv('data/raw/EdStatsData.csv')
 
     clean_df = drop_empty(df_to_clean)

@@ -3,21 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('data/processed/EdStatsAggregated.csv')
-
-with open('data/countries.csv') as f:
-    reader = csv.reader(f)
-    data = list(reader)
-country_codes = data[0]
-
-with open('data/indicators.csv') as g:
-    reader = csv.reader(g)
-    data_ = list(reader)
-indicators = data_[0]
-
-plt.rcParams.update({'font.size': 16})
-plt.style.use('bmh')
-
 
 def create_plot(df, labels, countries, filename):
     '''
@@ -86,4 +71,19 @@ def batch_plots(df, country_codes, indicators):
 
 
 if __name__ == '__main__':
+    df = pd.read_csv('data/processed/EdStatsAggregated.csv')
+
+    with open('data/countries.csv') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+    country_codes = data[0]
+
+    with open('data/indicators.csv') as g:
+        reader = csv.reader(g)
+        data_ = list(reader)
+    indicators = data_[0]
+
+    plt.rcParams.update({'font.size': 16})
+    plt.style.use('bmh')
+    
     batch_plots(df, country_codes, indicators)

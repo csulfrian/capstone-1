@@ -5,19 +5,6 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-with open('data/countries.csv') as f:
-    reader = csv.reader(f)
-    data = list(reader)
-country_codes = data[0]
-
-with open('data/indicators.csv') as g:
-    reader = csv.reader(g)
-    data_ = list(reader)
-indicators = data_[0]
-
-plt.rcParams.update({'font.size': 16})
-plt.style.use('bmh')
-
 
 def make_dfs(codes):
     file_list = []
@@ -164,6 +151,19 @@ def batch_heatmaps():
 
 
 if __name__ == '__main__':
+    with open('data/countries.csv') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+    country_codes = data[0]
+
+    with open('data/indicators.csv') as g:
+        reader = csv.reader(g)
+        data_ = list(reader)
+    indicators = data_[0]
+
+    plt.rcParams.update({'font.size': 16})
+    plt.style.use('bmh')
+
     batch_pdfs(country_codes, indicators)
 
     batch_heatmaps()
