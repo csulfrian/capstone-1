@@ -1,5 +1,6 @@
 # Large data files
-*.csv
+data/raw/*.csv
+data/processed/EdStatsClean.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,29 +1,26 @@
 # Education Spending & Outcomes Comparison
 
+![alt text](./images/banner.jpg "Countries' spending on education")
+
 ## Introduction
-I have a son who just finished up first grade. The last two months of his school year took place through a remote-learning platform, and the continuing COVID-19 pandemic could result in much if not all of his second grade education happening through the same platform. I've been thinking a lot about our education system since he's become school-aged, as well as my own education and the effectiveness and utility of the education system in the US. There are huge differences state-to-state within the US, which are illustrated when my wife and I talk about our own education experiences (New York and Nevada respectively) and the in-process education of our son.
+I have a son who just finished up first grade. The last two months of his school year took place through a remote-learning platform, and the continuing COVID-19 pandemic could result in much if not all of his second grade education happening through the same platform. I've been thinking a lot about our education system since he's become school-aged, as well as my own education and the effectiveness and utility of the education system in the US. The book _Outliers_ by Malcolm Gladwell also has some interesting thoughts on education that added to my interest on the subject. There are huge differences state-to-state within the US, which are illustrated when my wife and I talk about our own education experiences (New York and Nevada respectively) and the in-process education of our son.
 
 Every nation has their own theory of how to educate its children and in turn, different outcomes within the population. Some of those outcomes are easily quantifiable and easily correlated to education funding. Many other outcomes are less concrete.
 
 I chose to focus on primary education for this study. In American terms that roughly corresponds to 1st through 6th grade.
 
-With this dataset, I jumped in to explore some of these ideas.
-
-![alt text](./images/banner.jpg "Countries' spending on education")
+![alt text](./images/plot-us-spend.png "Countries' spending on education")
 
 ## Questions
 
-**How does the relationship between education spending correlate to different outcomes?**\
+### **How does the relationship between education spending correlate to different outcomes?**
 
-**Does the amount of education the workforce has correlate with the GDP per capita for each country?**\
+### **Does the amount of education the workforce has correlate with the GDP per capita for each country?**
 
-Knowing a little bit about 
-
-#### How much the US spends on education
-![alt text](./images/us-spend-gdp.png "Countries' spending on education")
+Each of these questions would be unique to the country, and the correlation values could be compared between countries.
 
 ## Data Cleanup
-I downloaded the data from Kaggle, and it was well-organized and junk-free. I compared this to the data available at The World Bank's data portal, and it was formatted in the same way. However, the dataset on Kaggle was much larger than any I could download off The World Bank site at a time. The data ends in 2015 but is very inconsistent that year, so most of the plots end in 2014.
+I downloaded the data from Kaggle, and it was well-organized and garbage character free. I compared this to the data available at The World Bank's data portal, and it was formatted in the same way. However, the dataset on Kaggle was much larger than any single dataset I could download off The World Bank site at one time. The data ends in 2015 but is very inconsistent that year, so most of the plots end in 2014. Unfortunately the inconsistent nature of a lot of the data collection resulted in some narrow windows where each country had data for common indicators. 
 
 Data cleaning was performed using Pandas to remove the _many_ blank rows in the dataset, reducing the dataset down from >326MB to 95MB; over 530,000 blank rows were removed as the first step in the cleaning pipeline. There were also many years that had no data at all (including years for projections from 2020 - 2100). The output from that step was then filtered to leave only data from the countries and indicator codes that were decided on before the cleaning started. That resulted in a single aggregated 17.3kB file and twelve 3kB files that all the subsequent analysis was performed from.
 
@@ -45,15 +42,15 @@ The countries and the indicator codes that were used to filter the data are stor
 
 
 ## Countries
-I chose 6 different countries for this study. There are some diverse ideas within this set about how education is run and how it relates to the workforce, and I thought it would be intersting to illustrate some of those differences. 
+I chose 6 different countries for this study. There are some diverse ideas within this group about how education is run and how it relates to the workforce, and I thought it would be intersting to illustrate some of those differences. 
 
 The countries are:
-* United States
-* Sweden
-* Brazil
-* Germany
-* Switzerland
-* Costa Rica
+* United States - USA
+* Sweden - SWE
+* Brazil - BRA
+* Germany - DEU
+* Switzerland - CHE
+* Costa Rica - CRI
 
 ## Indicator Codes
 From The World Bank:
@@ -72,24 +69,28 @@ There are a couple of metrics that I had hoped were in the data, but weren't (or
 
 ## Visualization
 There a lot of interesting things were highlighted by plotting the data. As it's the base metric of this project, Government Expenditure on Education as % of GDP is the first to look at. The US has been relatively consistent with its spending, while in the same time period Costa Rica has doubled its spending. Sweden is consistently high, while Germany stays toward the lower end, only a little lower than neighboring Switzerland. 
+![alt text](./images/plot-gdp-spend.png "Chart of countries' expenditure on education")
 
-#### Comparitive expenditures of the chosen countries
-![alt text](./images/plot-gdp-expenditure.png "Chart of countries' expenditure on education")
+Relative spending on primary education specifically tends to stay fairly constant within a country. Germany comes in again at the bottom of the heap.
 
+![alt text](./images/plot-expenditure-primary.png "Chart of education expenditures going toward primary education")
 
+Now let's take a look at one of the outcomes of education systems - the percentage of the labor force with advanced educations. Advanced education is defined as any amount of post-secondary education, including vocational programs (like this one!), college, and university. Some surprises here are the high percentage mean and tight distribution of the Brazilian workforce, while the US has a simliar mean but much larger deviation. Something that wasn't surprising is the low percentage of highly educated Germans because of their strong culture of apprenticeships over university in many fields.
 
-#### The percent of total education spending going towards primary education
-![alt text](./images/plot-percent-on-primary.png "Chart of education expenditures going toward primary education")
+Also to note: the downward trend in many of the countries (albeit over a short period).
+![alt text](./images/plot-percent-advanced.png "Percentage of those with advanced educations")
 
-#### Distributions of the percentage of labor force with advanced educations
-Distributions of the percentage of the labor force with advanced educations.
-![alt text](./images/pdf-percent-advanced.png "Distributions of the percentage of those with advanced educations")
+## Basic Analysis
 
-#### Distributions of GDP per capita
-This chart shows the distributions of GDP per capita for our selection of countries
-![alt text](./images/pdf-gdp-per-capita.png "Distributions of GDP per capita")
+Right away, this plot of the PDFs of the amount of students per teacher jumps out as something that could likely be highly correlated to the total investment in education a country makes. Let's remember this metric.
+![alt text](./images/pdf-student-teacher-ratio.png "Student to teacher ratio")
+
 
 ## Indicator Code Correlation
 
-#### The correlation heatmaps of 6 countries for comparison
-![alt text](./images/spearman-heatmap-animated.png "Animated heatmaps of 6 countries")
+The correlation heatmaps generated for each country tell an interesting story, but one that's expected. 
+
+![alt text](./images/spearman-heatmap-animated.gif "Animated heatmaps of 6 countries")
+
+
+## Conclusion

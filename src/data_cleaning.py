@@ -26,12 +26,11 @@ def drop_empty(df):
     Output:
         cols_to_drop - list of column names
     '''
-
     # Empty row removal
     df['sum'] = df.sum(axis=1)
     df_to_clean = df[df['sum'] != 0]
 
-    # Empty column removal
+    # Empty/inconsistent column removal
     cols_to_drop = ['Unnamed: 69', '2016', '2017']
     for year in range(1970, 1978):
         cols_to_drop.append(str(year))
@@ -68,6 +67,17 @@ def country_df(df, country_code, indicators):
 
 
 def join_df(df, country_codes, indicators):
+    '''
+    Joins all of the cleaned dataframes into one .csv saved to disk
+
+    Input:
+        df - the DataFrames
+        indicators - the indicator codes
+
+    Output:
+        Returns the joined DataFrame
+        Saves the .csv
+    '''
     joined = pd.DataFrame(df.iloc[0]).T
 
     for country in country_codes:
@@ -75,8 +85,8 @@ def join_df(df, country_codes, indicators):
         joined = pd.concat([joined, country_dfs], axis=0)
 
     joined = joined.drop(index=4)\
-                   .reset_index(drop=True)
-                   
+                   .set_index('Country Name')
+
     joined.to_csv('data/processed/EdStatsAggregated.csv')
 
     return joined
@@ -84,13 +94,13 @@ def join_df(df, country_codes, indicators):
 
 def one_indicator_df(df, indicators):
     '''
-    Saves a copy of each indicator code we're interested in with all the countries
-    we want. Also strips out NaNs
+    Saves a copy of each indicator code we're interested in
+    with all the countries we want. Also strips out NaNs.
 
     Input:
         df - the DataFrame
         indicators - the indicator codes
-    
+
     Output:
         No return. Just saving the .csv
     '''
@@ -106,6 +116,6 @@ if __name__ == '__main__':
 
     clean_df = drop_empty(df_to_clean)
 
-    joined_df= join_df(clean_df, country_codes, indicators)
+    joined_df = join_df(clean_df, country_codes, indicators)
 
     one_indicator_df(joined_df, indicators)
