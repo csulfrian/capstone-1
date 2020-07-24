@@ -2,6 +2,7 @@
 
 ![alt text](./images/banner.jpg "Countries' spending on education")
 
+
 ## Introduction
 I have a son who just finished up first grade. The last two months of his school year took place through a remote-learning platform, and the continuing COVID-19 pandemic could result in much if not all of his second grade education happening through the same platform. I've been thinking a lot about our education system since he's become school-aged, as well as my own education and the effectiveness and utility of the education system in the US. The book _Outliers_ by Malcolm Gladwell also has some interesting thoughts on education that added to my interest on the subject. There are huge differences state-to-state within the US, which are illustrated when my wife and I talk about our own education experiences (New York and Nevada respectively) and the in-process education of our son.
 
@@ -11,6 +12,7 @@ I chose to focus on primary education for this study. In American terms that rou
 
 ![alt text](./images/plot-us-spend.png "Countries' spending on education")
 
+
 ## Questions
 
 ### **How does the relationship between education spending correlate to different outcomes?**
@@ -19,12 +21,14 @@ I chose to focus on primary education for this study. In American terms that rou
 
 Each of these questions would be unique to the country, and the correlation values could be compared between countries.
 
+
 ## Data Cleanup
 I downloaded the data from Kaggle, and it was well-organized and garbage character free. I compared this to the data available at The World Bank's data portal, and it was formatted in the same way. However, the dataset on Kaggle was much larger than any single dataset I could download off The World Bank site at one time. The data ends in 2015 but is very inconsistent that year, so most of the plots end in 2014. Unfortunately the inconsistent nature of a lot of the data collection resulted in some narrow windows where each country had data for common indicators. 
 
 Data cleaning was performed using Pandas to remove the _many_ blank rows in the dataset, reducing the dataset down from >326MB to 95MB; over 530,000 blank rows were removed as the first step in the cleaning pipeline. There were also many years that had no data at all (including years for projections from 2020 - 2100). The output from that step was then filtered to leave only data from the countries and indicator codes that were decided on before the cleaning started. That resulted in a single aggregated 17.3kB file and twelve 3kB files that all the subsequent analysis was performed from.
 
 The countries and the indicator codes that were used to filter the data are stored in two .csv files to provide a fast way to change the filter parameters.
+
 
 #### A brief look at the raw data
 |    | Country Name   | Country Code   | Indicator Name                                                          | Indicator Code   |     1970 |     1971 |     1972 |     1973 |     1974 |     1975 |   1976 |     1977 |     1978 |     1979 |     1980 |     1981 |     1982 |     1983 |     1984 |     1985 |     1986 |     1987 |     1988 |     1989 |     1990 |     1991 |     1992 |     1993 |     1994 |     1995 |     1996 |     1997 |     1998 |     1999 |     2000 |     2001 |     2002 |     2003 |     2004 |     2005 |     2006 |     2007 |     2008 |    2009 |    2010 |     2011 |     2012 |     2013 |     2014 |   2015 |   2016 |   2017 |   2020 |   2025 |   2030 |   2035 |   2040 |   2045 |   2050 |   2055 |   2060 |   2065 |   2070 |   2075 |   2080 |   2085 |   2090 |   2095 |   2100 |   Unnamed: 69 |
@@ -52,6 +56,7 @@ The countries are:
 * Switzerland - CHE
 * Costa Rica - CRI
 
+
 ## Indicator Codes
 From The World Bank:
 > "World Development Indicators (WDI) is the primary World Bank collection of development indicators, compiled from officially recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates."
@@ -67,9 +72,15 @@ There are more than 3,600 indicator codes per country listed within the data, an
 
 There are a couple of metrics that I had hoped were in the data, but weren't (or I couldn't find them). Those were the length of the school year and length of the school day. A future expansion of this project could include those as well.
 
+
 ## Visualization
 There a lot of interesting things were highlighted by plotting the data. As it's the base metric of this project, Government Expenditure on Education as % of GDP is the first to look at. The US has been relatively consistent with its spending, while in the same time period Costa Rica has doubled its spending. Sweden is consistently high, while Germany stays toward the lower end, only a little lower than neighboring Switzerland. 
+
 ![alt text](./images/plot-gdp-spend.png "Chart of countries' expenditure on education")
+
+GDP per capita has rapidly diverged over the past 35 years. 
+
+![alt text](./images/plot-gdp-per-capita.png "GDP per capita")
 
 Relative spending on primary education specifically tends to stay fairly constant within a country. Germany comes in again at the bottom of the heap.
 
@@ -79,6 +90,7 @@ Now let's take a look at one of the outcomes of education systems - the percenta
 
 Also to note: the downward trend in many of the countries (albeit over a short period).
 ![alt text](./images/plot-percent-advanced.png "Percentage of those with advanced educations")
+
 
 ## Basic Analysis
 
@@ -102,14 +114,24 @@ Switzerland shows some pretty deep colors, which seem to follow its pattern of h
 
 ![alt text](./images/pearson-heatmap-CHE.png "Switzerland correlation heatmap")
 
-Compared to its neighbor Switzerland, Germany has much lower correlation values for most every indicator. 
+Compared to its neighbor Switzerland, Germany has lower correlation values for many of the indicators. 
 
 ![alt text](./images/pearson-heatmap-DEU.png "Germany correlation heatmap")
 
 ![alt text](./images/pearson-heatmap-CRI.png "Costa Rica correlation heatmap")
 
+![alt text](./images/pearson-heatmap-USA.png "United States correlation heatmap")
+
+
 ## Conclusion
 
+It seems to be easy to correlate things that are directly related to education, such as students per teacher in classrooms and the overall number of teachers in primary education. It seems those can be thought of as direct results of the amount a government invests in its education system.
+
+Where things get a little trickier is the amount of people in the workforce that have advanced educations. They seem to be correlated in countries that value higher education, such as the United States. It also seems to trend the other way in Germany, where work experience is valued to a much higher degree than degrees. I'm not familiar with the societal value of higher education in the other countries, so the correlations there could be down to a number of other factors.
+
+GDP per capita also comes in high in the correlation values category, but I think that is too complicated a number to associate with anything other than perhaps the amount of workers with advanced educations.
+
+This was an interesting evaluation for me, and I'm looking forward to expanding more of the capabilities of my scripts!
 
 
 ## Points to Expand Project Further
