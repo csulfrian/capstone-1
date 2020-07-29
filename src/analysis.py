@@ -122,7 +122,7 @@ def create_heatmap(df, country, filename, method='spearman'):
     heat = sns.heatmap(correlation_matrix, mask=mask,
                        vmin=-1, vmax=1, cmap='BrBG')
     heat.set_yticklabels(readable_labels)
-    heat.set_xticklabels(readable_labels, rotation=45)
+    heat.set_xticklabels(readable_labels, ha='right', rotation=45)
     heat.set_title(f'{method.title()} Correlation Heatmap - {country}',
                    fontdict={'fontsize': 18}, pad=12)
     plt.savefig(f'images/heatmap-{filename}.png',
@@ -164,6 +164,6 @@ if __name__ == '__main__':
     plt.rcParams.update({'font.size': 16})
     plt.style.use('bmh')
 
-    batch_pdfs(country_codes, indicators)
+    # batch_pdfs(country_codes, indicators)
 
     batch_heatmaps()
